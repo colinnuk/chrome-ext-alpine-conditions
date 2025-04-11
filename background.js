@@ -1,12 +1,12 @@
-const contextMenu = require('./contextMenu');
-const { openTabWithCoordinates } = require('./utils/urlBuilder');
-
-chrome.runtime.onInstalled.addListener(() => {
-    contextMenu.createContextMenu();
-});
+import { buildUrl } from './utils/urlBuilder.js';
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'openTab') {
-        openTabWithCoordinates(request.lat, request.lng);
+    if (request.action === 'navigateToAc') {
+        const { latitude, longitude } = request.coordinates;
+        const url = buildUrl(latitude, longitude);
+        chrome.tabs.create({ url: url });
+    } else if (request.action === 'getCoordinates') {
+
+        sendResponse({ coordinates: latestCoordinates });
     }
 });

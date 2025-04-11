@@ -1,29 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const navigateButton = document.getElementById('navigateButton');
-    const coordinatesInput = document.getElementById('coordinatesInput');
+import { parseUrl } from '../utils/parseUrl.js';
+import { buildUrl } from '../utils/urlBuilder.js';
 
-    navigateButton.addEventListener('click', function() {
-        const coordinates = coordinatesInput.value.trim();
+document.addEventListener('DOMContentLoaded', function() {
+    const coordinatesInfo = document.getElementById('coordinates-info');
+    const navigateButton = document.getElementById('navigate-button');
+    let latitude, longitude;
+    
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        const currentUrl = tabs[0].url;
+        const coordinates = parseUrl(currentUrl);
         if (coordinates) {
-            const [lat, long] = coordinates.split(',').map(coord => coord.trim());
-            if (isValidCoordinate(lat) && isValidCoordinate(long)) {
-                const url = buildUrl(lat, long);
-                chrome.tabs.create({ url: url });
-            } else {
-                alert('Please enter valid latitude and longitude.');
-            }
+            latitude = coordinates.lat;
+            longitude = coordinates.lng;
+            coordinatesInfo.textContent = `Coordinates: ${latitude}, ${longitude}`;
+            navigateButton.disabled = false;
         } else {
-            alert('Please enter coordinates.');
+            coordinatesInfo.textContent = "No valid coordinates found in URL";
         }
     });
 
-    function isValidCoordinate(coord) {
-        const num = parseFloat(coord);
-        return !isNaN(num) && num >= -90 && num <= 90;
-    }
-
-    function buildUrl(lat, long) {
-        // Replace with the actual URL structure for the external mapping site
-        return `https://example.com/map?lat=${lat}&long=${long}`;
-    }
+    navigateButton.addEventListener('click', function() {
+        if (latitude && longitude) {
+            const url = buildUrl(latitude, longitude);
+            chrome.tabs.create({ url: url });
+        }
+    });    
 });

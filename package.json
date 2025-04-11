@@ -1,0 +1,24 @@
+{
+  "name": "chrome-ext-alpine-conditions",
+  "version": "1.0.0",
+  "description": "Chrome extension for Alpine conditions",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
+  "keywords": [
+    "chrome-extension",
+    "alpine"
+  ],
+  "author": "AlpineConditions",
+  "license": "",
+  "devDependencies": {
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "babel-loader": "^9.1.2"
+  }
+}
