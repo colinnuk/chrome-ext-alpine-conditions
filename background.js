@@ -1,12 +1,10 @@
-import { buildUrl } from './utils/urlBuilder.js';
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'navigateToAc') {
-        const { latitude, longitude } = request.coordinates;
-        const url = buildUrl(latitude, longitude);
-        chrome.tabs.create({ url: url });
-    } else if (request.action === 'getCoordinates') {
-
-        sendResponse({ coordinates: latestCoordinates });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log("Background script received message:", request);
+    
+    if (request.action === "openTab") {
+        chrome.tabs.create({ url: request.url });
+        sendResponse({ success: true });
     }
+    
+    return true;
 });
