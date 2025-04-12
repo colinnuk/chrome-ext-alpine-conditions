@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "AlpineConditions Companion",
   "version": "1.0",
-  "description": "An extension to navigate to external mapping sites using coordinates from the current page.",
+  "description": "An extension to navigate to AlpineConditions.com - supports websites with latitude and longitude in the URL or you can highlight text on a page to link straight to the weather forecast for that location.",
   "permissions": [
     "contextMenus",
     "tabs",
