@@ -1,5 +1,5 @@
 export function parseText(text) {
-    const regex = /([-+]?[0-9]*\.?[0-9]+)\s*,\s*([-+]?[0-9]*\.?[0-9]+)/;
+    const regex = /.*?([-+]?[0-9]*\.?[0-9]+).*?,\s*.*?([-+]?[0-9]*\.?[0-9]+).*/;
     const match = text.match(regex);
     if (match) {
         return {

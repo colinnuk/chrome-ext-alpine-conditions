@@ -61,6 +61,26 @@ function parseCalTopoUrl(url) {
     return null;
 }
 
+function tryParseGenericLatLonUrl(url) {
+    try {
+        const urlObj = new URL(url);
+        const params = urlObj.searchParams;
+
+        let lat = params.get('lat') || params.get('latitude');
+        let lng = params.get('lon') || params.get('longitude');
+
+        if (lat && lng) {
+            return {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng)
+            };
+        }
+    } catch (error) {
+        console.error("Error parsing generic lat/lon URL:", error);
+    }
+    return null;
+}
+
 function identifySiteFromUrl(url) {
     try {
         if (url.includes('google.com/maps')) {
@@ -78,6 +98,8 @@ function identifySiteFromUrl(url) {
 
 export function parseUrl(url) {
     const siteType = identifySiteFromUrl(url);
+    let coords = null;
+
     switch (siteType) {
         case 'google':
             return parseGoogleMapsUrl(url);
@@ -85,7 +107,6 @@ export function parseUrl(url) {
             return parseGaiaGpsUrl(url);
         case 'caltopo':
             return parseCalTopoUrl(url);
-        default:
-            return null;
     }
+    return tryParseGenericLatLonUrl(url);
 }
