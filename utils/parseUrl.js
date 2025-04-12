@@ -98,7 +98,6 @@ function identifySiteFromUrl(url) {
 
 export function parseUrl(url) {
     const siteType = identifySiteFromUrl(url);
-    let coords = null;
 
     switch (siteType) {
         case 'google':
