@@ -1,11 +1,9 @@
 {
   "manifest_version": 3,
   "name": "AlpineConditions Companion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides easy navigation to AlpineConditions.com, from latitude & longitude coordinates and supported mapping websites.",
   "permissions": [
-    "contextMenus",
-    "tabs",
     "activeTab"
   ],
   "background": {
